@@ -1,21 +1,30 @@
 import React, {Component} from 'react';
 import Suggestions from "./Suggestions";
 import Suggestion from "./Suggestion";
+import Login from "./Login";
 //import AskQuestion from "./AskQuestion";
 import {Router} from "@reach/router";
+import AuthService from './AuthService';
+
+
 
 class App extends Component {
 
     // API url from the file '.env' OR the file '.env.development'.
     // The first file is only used in production.
-    API_URL = process.env.REACT_APP_API_URL;
+    API_URL = 'http://localhost:8080/api';
+
+   // API_URL = process.env.REACT_APP_API_URL;
 
     constructor(props) {
         super(props);
 
+        // Initialize the auth service with the path of the API authentication route.
+        this.Auth = new AuthService(`${this.API_URL}/users/authenticate`);
         this.state = {
             suggestions: []
-        };
+
+    };
     }
 
     componentDidMount() {
@@ -53,10 +62,21 @@ class App extends Component {
             suggestions: json
         })
     }
+    async logout() {
+        this.setState({
+            userCredentials :
+            {
+                username: "",
+                password: ""
+            }
+        });
+        this.logout();
+    }
 
     async AddSignature(id, user) {
-        console.log("AddSignature", 'id:' + id, ' answer:' + user);
+        console.log("AddSignature", 'id:' + id, ' user:' + user);
         const url = `${this.API_URL}/suggestions/${id}/signatures`;
+
 
         const response = await fetch(url, {
             headers: {
@@ -92,7 +112,15 @@ class App extends Component {
     GetSuggestion(_id) {
         return this.state.suggestions.find(k => k._id === _id);
     }
-
+    async login(username, password) {
+        try {
+            const resp = await this.Auth.login(username, password);
+            console.log("Authentication:", resp.msg);
+            this.GetData();
+        } catch (e) {
+            console.log("Login", e);
+        }
+    }
 
 
 // Render is used for showing all data. In the render you are defining what the render should return, (what to show).
@@ -103,10 +131,10 @@ class App extends Component {
                 <Router>
                     <Suggestions path="/" data={this.state.suggestions}></Suggestions>
                     <Suggestion path="/suggestions/:id" GetSuggestion={(_id) => this.GetSuggestion(_id)} addSuggestion={(suggestion, username) => this.addSuggestion(suggestion, username)} AddSignature={(id, user) => this.AddSignature(id, user)}></Suggestion>
+
                 </Router>
+                <Login path="/login" login={(username, password) => this.login(username, password)}>Login</Login>
 
-
-                <br/><br/>
             </>
         );
     }

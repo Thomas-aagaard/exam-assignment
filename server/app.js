@@ -15,6 +15,7 @@ app.use(cors());
 app.use(bodyParser.json()); // Parse JSON from the request body
 app.use(morgan('combined')); // Log all requests to the console
 app.use(express.static('../client/build')); // Needed for serving production build of React
+const checkJwt = require('express-jwt');
 
 
 
@@ -22,7 +23,25 @@ app.use(express.static('../client/build')); // Needed for serving production bui
 /**** Database ****/
 const suggestion_db = require('./suggestion_db')(mongoose);
 
+// Open paths that do not need login. Any route not included here is protected!
+let openPaths = [
+    { url: '/api/users/authenticate', methods: ['POST'] },
+    {url:'/api/suggestions', methods: ['GET']},
+    {url:'/api/suggestions/:id', methods: ['GET']}
+];
 
+// Validate the user using authentication. checkJwt checks for auth token.
+const secret = process.env.SECRET || "exam is the best";
+app.use(checkJwt({ secret: secret }).unless({ path : openPaths }));
+
+// This middleware checks the result of checkJwt
+app.use((err, req, res, next) => {
+    if (err.name === 'UnauthorizedError') { // If the user didn't authorize correctly
+        res.status(401).json({ error: err.message }); // Return 401 with error message.
+    } else {
+        next(); // If no errors, forward request to next middleware or route
+    }
+});
 
 /**** Routes ****/
 app.get('/api/suggestions', async (req, res) => {
@@ -30,6 +49,9 @@ app.get('/api/suggestions', async (req, res) => {
   await res.json(ques);
   console.log(ques);  /// Tried to see if I could find why I dont get the data
 });
+const usersRouter = require('./routers/users_router')(secret);
+app.use('/api/users', usersRouter);
+
 
 app.get('/api/suggestions/:id', async (req, res) => {
   let id = req.params.id;
