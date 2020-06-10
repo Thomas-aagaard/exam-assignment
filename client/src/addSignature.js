@@ -12,7 +12,6 @@ export default class addSignature extends Component {
     constructor(props) {
         super(props);
         this.Auth = new AuthService(`${this.API_URL}/users/authenticate`);
-        this.Auth.getToken();
         this.state = {
             input: "",
         };
@@ -23,13 +22,13 @@ export default class addSignature extends Component {
         });
     }
     onSubmit(event) {
-        const info = this.state.input;;
-        if ( info  === "svend"){
+        //const info = this.state.input;;
+       // if ( info  === "svend"){
             this.props.AddSignature(this.props.id, this.state.input);
-        }
-        else {
-            console.log("Did not work");
-        }
+      //  }
+      //  else {
+        //    console.log("Did not work");
+     //   }
     }
     async GetData() {
         const resp = await this.Auth.fetch(`${this.API_URL}/suggestions`);

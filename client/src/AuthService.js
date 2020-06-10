@@ -26,6 +26,8 @@ class AuthService {
 
     loggedIn() {
         // TODO: Check if token is expired using 'jwt-decode'
+
+
         // TODO: Install using 'npm install jwt-decode'
         /*
         if (jwtDecode(token).exp < Date.now() / 1000) {

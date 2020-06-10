@@ -5,6 +5,7 @@ import Login from "./Login";
 //import AskQuestion from "./AskQuestion";
 import {Router} from "@reach/router";
 import AuthService from './AuthService';
+import { Link } from "@reach/router";
 
 
 
@@ -131,9 +132,10 @@ class App extends Component {
                 <Router>
                     <Suggestions path="/" data={this.state.suggestions}></Suggestions>
                     <Suggestion path="/suggestions/:id" GetSuggestion={(_id) => this.GetSuggestion(_id)} addSuggestion={(suggestion, username) => this.addSuggestion(suggestion, username)} AddSignature={(id, user) => this.AddSignature(id, user)}></Suggestion>
-
+                    <Login path="/login" login={(username, password) => this.login(username, password)}></Login>
                 </Router>
-                <Login path="/login" login={(username, password) => this.login(username, password)}>Login</Login>
+                <Link to={"/login"}>Loginpage</Link>
+
 
             </>
         );
@@ -142,3 +144,4 @@ class App extends Component {
 export default App;
 
 ///<AskSuggestion addSuggestion={(suggestion) => this.addSuggestion(suggestion)}/>
+// <Login path="/login" login={(username, password) => this.login(username, password)}></Login>
