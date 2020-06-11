@@ -1,20 +1,18 @@
-import React, {Component /*useEffect*/} from 'react';
+import React, {Component} from 'react';
 import {Link} from "@reach/router";
-import AuthService from './AuthService';
+import AuthService from "./AuthService";
 
 
  class Login extends Component {
+
 
      constructor(props) {
         super(props);
          // Initialize the auth service with the path of the API authentication route.
          this.Auth = new AuthService(`${this.API_URL}/users/authenticate`);
         this.state ={
-            userCredentials :
-                {
                     username: "",
                     password: ""
-                }
         };
  }
 

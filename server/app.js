@@ -27,8 +27,8 @@ const suggestion_db = require('./suggestion_db')(mongoose);
 let openPaths = [
     { url: '/api/users/authenticate', methods: ['POST'] },
     {url:'/api/suggestions', methods: ['GET']},
-    {url:'/api/suggestions/:id', methods: ['GET']},
-    {url:'/api/suggestion', methods: ['POST']}
+    {url:'/api/suggestions/:id', methods: ['GET']}
+    //{url:'/api/suggestion', methods: ['POST']}
 ];
 
 // Validate the user using authentication. checkJwt checks for auth token.

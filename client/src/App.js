@@ -6,15 +6,16 @@ import AddSuggestion from "./AddSuggestion";
 import {Router} from "@reach/router";
 import AuthService from './AuthService';
 import { Link } from "@reach/router";
+///const jwt = require('jsonwebtoken');
 
 
 class App extends Component {
 
     // API url from the file '.env' OR the file '.env.development'.
     // The first file is only used in production.
-    API_URL = 'http://localhost:8080/api';
+   // API_URL = 'http://localhost:8080/api';
 
-   // API_URL = process.env.REACT_APP_API_URL;
+    API_URL = process.env.REACT_APP_API_URL;
 
     constructor(props) {
         super(props);
@@ -35,9 +36,13 @@ class App extends Component {
     async CreateSuggestion(title, description, suggestion, username) {
         // fetching data from the https link below
         let url = `${this.API_URL}/suggestion`;
+        // using the token to be set in the localstorage in the browser. See inspect - application - localhost:3000.
+        let userToken  = localStorage.getItem("username");
+
         const response = await fetch(url, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userToken}` // defining that I am using Bearer as my authorization.
             },
             // Defining what method should be used
             method: 'POST',
@@ -77,13 +82,14 @@ class App extends Component {
     async AddSignature(id, user) {
         console.log("AddSignature", 'id:' + id, ' user:' + user);
         const url = `${this.API_URL}/suggestions/${id}/signatures`;
+
         // using the token to be set in the localstorage in the browser. See inspect - application - localhost:3000.
-        var userToken  = localStorage.getItem("username");
+        let userToken  = localStorage.getItem("username");
 
         const response = await fetch(url, {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${userToken}` // defining that I am using Bearer as my authorization
+                'Authorization': `Bearer ${userToken}` // defining that I am using Bearer as my authorization.
             },
             method: 'POST',
 
