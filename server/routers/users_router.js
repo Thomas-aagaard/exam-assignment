@@ -10,6 +10,7 @@ const users = [
     { id: 0, username: "tom", password: '123'},
     { id: 1, username: "svend", password: '555'},
     { id: 2, username: "niels", password: 'niller'},
+    { id: 4, username: "admin", password: 'admin'},
 ];
 
 // Creating more test data: We run through all users and add a hash of their password to each.

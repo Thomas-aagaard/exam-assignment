@@ -5,7 +5,10 @@
 class AuthService {
     constructor(auth_api_url) {
         this.auth_api_url = auth_api_url;
+
+
     }
+
 
     async login(username, password) {
         const res = await this.fetch(this.auth_api_url, {
@@ -25,6 +28,7 @@ class AuthService {
     }
 
     loggedIn() {
+
         // TODO: Check if token is expired using 'jwt-decode'
 
 

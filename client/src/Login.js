@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component /*useEffect*/} from 'react';
 import {Link} from "@reach/router";
 import AuthService from './AuthService';
 
@@ -7,7 +7,6 @@ import AuthService from './AuthService';
 
      constructor(props) {
         super(props);
-
          // Initialize the auth service with the path of the API authentication route.
          this.Auth = new AuthService(`${this.API_URL}/users/authenticate`);
         this.state ={
@@ -18,6 +17,8 @@ import AuthService from './AuthService';
                 }
         };
  }
+
+
 
 handlechange(event) {
     this.setState({
@@ -30,6 +31,10 @@ handlelogin() {
         this.state.username,
         this.state.password
     );
+    //let usertoken = localStorage.getItem("token");
+  /*  useEffect => (() => {
+        localStorage.setItem('Bearer', JSON.stringify(usertoken))
+    });*/
 
 }
     render() {
@@ -39,13 +44,13 @@ handlelogin() {
                 <label htmlFor="user">
                     Username
                 </label>
-                <input id="user" name="username" type="text" onChange={event => this.handlechange(event)}></input>
+                <input id="user" name="username" placeholder="username" type="text" onChange={event => this.handlechange(event)}></input>
                 <br/>
                 <br/>
                 <label htmlFor="pass">
                     Password
                 </label>
-                <input id="pass" name="password" type="password" onChange={event => this.handlechange(event)}></input>
+                <input id="pass" name="password" placeholder="password" type="password" onChange={event => this.handlechange(event)}></input>
                 <br/>
                 <br/>
                 <button onClick={_ => this.handlelogin()}>Login</button>

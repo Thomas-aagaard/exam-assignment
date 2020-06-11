@@ -16,6 +16,8 @@ export default class Suggestion extends Component {
         // const id = this.props.id;
         //  const question = this.props.GetQuestion(id);
         const suggestion = this.props.GetSuggestion(this.props.id);
+        let title = "";
+        let description ="";
         let content = "Loading";
         let date = Date.now();
         let username = '';
@@ -24,18 +26,19 @@ export default class Suggestion extends Component {
 
         // if question is empty then replace the question with "loading" see variable content above
         if (suggestion) {
+            title = suggestion.title;
+            description = suggestion.description;
             content = suggestion.suggestion;
             date = suggestion.date;
             username = suggestion.username;
             signatures = suggestion.signatures;
             showuser = suggestion.usersignature.map(a => <li key={a}><strong>{ "User: "} </strong>{ a.user} <strong>{" date: "}</strong>{ a.userdate}</li>);
-            /*  usersignature = suggestion.usersignature.map(a => <li key={a}><strong> { "Answers: "}</strong>{a.text}<strong> { "Votes: "}</strong>
-                  <button onClick={_ => this.onSubmit(a._id)}>GIVE A VOTE</button>{ a.user}</li>);*/
         }
 
         return (
             <>
-                <h2>Suggestion: {content}</h2>
+                <h2>{title} Suggestion: {content}</h2>
+                <p>Description:  {description}</p>
                 <p>{"Date:" + date }</p><p>{"Username: " + username } </p>
                 <p><strong>{"Signature: " }</strong>{signatures} </p>
                 <p>{showuser}</p>
@@ -56,4 +59,4 @@ export default class Suggestion extends Component {
             </>
         );
     }
-} /// <Answer id={this.props.id} AddSignature={(id) => this.AddSignature(id)}/>
+}

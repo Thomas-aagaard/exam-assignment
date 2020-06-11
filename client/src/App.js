@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import Suggestions from "./Suggestions";
 import Suggestion from "./Suggestion";
 import Login from "./Login";
-//import AskQuestion from "./AskQuestion";
+import AddSuggestion from "./AddSuggestion";
 import {Router} from "@reach/router";
 import AuthService from './AuthService';
 import { Link } from "@reach/router";
-
 
 
 class App extends Component {
@@ -33,9 +32,9 @@ class App extends Component {
         this.GetData().then(() => console.log("Suggestions gotten!"));
     }
 
-    async addSuggestion(suggestion, username) {
+    async CreateSuggestion(title, description, suggestion, username) {
         // fetching data from the https link below
-        let url = `${this.API_URL}/suggestions`;
+        let url = `${this.API_URL}/suggestion`;
         const response = await fetch(url, {
             headers: {
                 'Content-Type': 'application/json'
@@ -44,15 +43,16 @@ class App extends Component {
             method: 'POST',
             // Clarifying what the data should be.
             body: JSON.stringify({
-                "suggestion": suggestion,
-                //"answers": [{text:"", votes:0}]
-                "username":username,
-                "signatures":0,
-                "usersignature": [{user:""}]
+                title:title,
+                description:description,
+                suggestion: suggestion,
+                username:username,
+                usersignature:[{user:"", userdate:""}]
             })
         });
         const data = await response.json();
         console.log("Printing the response:", data);
+        await this.GetData();
     }
 
     async GetData() {
@@ -77,13 +77,16 @@ class App extends Component {
     async AddSignature(id, user) {
         console.log("AddSignature", 'id:' + id, ' user:' + user);
         const url = `${this.API_URL}/suggestions/${id}/signatures`;
-
+        // using the token to be set in the localstorage in the browser. See inspect - application - localhost:3000.
+        var userToken  = localStorage.getItem("username");
 
         const response = await fetch(url, {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${userToken}` // defining that I am using Bearer as my authorization
             },
             method: 'POST',
+
             body: JSON.stringify({
                user: user
             })
@@ -93,22 +96,7 @@ class App extends Component {
         console.log("Printing the response:", json);
         await this.GetData();
     }
-   /* async AddVoting(id, aid) {
-        console.log("postVoting", 'id:' + id, ' answer:' + aid);
-        //const question = this.state.questions.find(k => k._id === _id);
-        const url = `${this.API_URL}/questions/${id}/answers/${aid}`;
 
-        const response = await fetch(url, {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            method: 'PUT',
-        });
-        const json = await response.json();
-
-        console.log("Printing the response:", json);
-        await this.GetData();
-    }*/
 
     GetSuggestion(_id) {
         return this.state.suggestions.find(k => k._id === _id);
@@ -128,20 +116,22 @@ class App extends Component {
     render() {
         return (
             <>
-                <h2>Question and Answers website</h2>
+                <h2>Exam assignment</h2>
                 <Router>
                     <Suggestions path="/" data={this.state.suggestions}></Suggestions>
-                    <Suggestion path="/suggestions/:id" GetSuggestion={(_id) => this.GetSuggestion(_id)} addSuggestion={(suggestion, username) => this.addSuggestion(suggestion, username)} AddSignature={(id, user) => this.AddSignature(id, user)}></Suggestion>
+                    <Suggestion path="/suggestions/:id" GetSuggestion={(_id) => this.GetSuggestion(_id)} AddSignature={(id, user) => this.AddSignature(id, user)}></Suggestion>
                     <Login path="/login" login={(username, password) => this.login(username, password)}></Login>
+                    <AddSuggestion path="/suggestion" CreateSuggestion={(title, description, suggestion, username) => this.CreateSuggestion(title, description, suggestion, username)} ></AddSuggestion>
                 </Router>
-                <Link to={"/login"}>Loginpage</Link>
 
+                <Link to={"/suggestion"}>AddSuggestion</Link>
+                <div>
+                    <Link to={"/login"}>Loginpage</Link>
+                </div>
+                </>
 
-            </>
         );
     }
 }
 export default App;
 
-///<AskSuggestion addSuggestion={(suggestion) => this.addSuggestion(suggestion)}/>
-// <Login path="/login" login={(username, password) => this.login(username, password)}></Login>

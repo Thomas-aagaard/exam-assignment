@@ -27,7 +27,8 @@ const suggestion_db = require('./suggestion_db')(mongoose);
 let openPaths = [
     { url: '/api/users/authenticate', methods: ['POST'] },
     {url:'/api/suggestions', methods: ['GET']},
-    {url:'/api/suggestions/:id', methods: ['GET']}
+    {url:'/api/suggestions/:id', methods: ['GET']},
+    {url:'/api/suggestion', methods: ['POST']}
 ];
 
 // Validate the user using authentication. checkJwt checks for auth token.
@@ -49,6 +50,8 @@ app.get('/api/suggestions', async (req, res) => {
   await res.json(ques);
   console.log(ques);  /// Tried to see if I could find why I dont get the data
 });
+
+
 const usersRouter = require('./routers/users_router')(secret);
 app.use('/api/users', usersRouter);
 
@@ -60,8 +63,10 @@ app.get('/api/suggestions/:id', async (req, res) => {
    console.log(ques);
 });
 
-app.post('/api/suggestions', async (req, res) => {
+app.post('/api/suggestion', async (req, res) => {
   let suggestions = {
+      title: req.body.title,
+      description:req.body.description,
       suggestion : req.body.suggestion,
       date: Date().toString(),
       username: req.body.username,

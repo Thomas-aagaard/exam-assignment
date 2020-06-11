@@ -6,6 +6,8 @@ class Db {
     constructor(mongoose) {
         // This is the schema we need to store question in MongoDB
         const suggestionSchema = new mongoose.Schema({
+            title:String,
+            description:String,
             suggestion: String,
             date: Date,
             username: String,
@@ -60,29 +62,23 @@ class Db {
         }
     }
 
-   /* async addSignatures(id) {
-        try  {
-            const suggestion = await this.getSuggestion(id);
-           //const answer = suggestion.answers.id(sid);
-            suggestion.signatures++;
-            return await suggestion.save();
-        }
-        catch (error) {
-            console.error("You didnt add your signature to the suggestion:", error.message);
-            return {};
-        }
-    }
-*/
+
     /**
      * This method adds a bunch of test data if the database is empty.
      * @param count The amount of question to add...
      * @returns {Promise} Resolves when everything has been saved.
      */
     async bootstrap(count = 10) {
-        const answers = ['this is a answer', 'answer 2', 'answer 3', 'answer 4'];
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1) + min);
         }
+        function getTitle() {
+            return ['What is React?', 'How do you fetch?', 'What is a REST API?', 'What is a full stacker?'][getRandomInt(0,3)]
+        }
+        function getDescription() {
+            return ['What is React?', 'How do you fetch?', 'What is a REST API?', 'What is a full stacker?'][getRandomInt(0,3)]
+        }
+
         function getSuggestion() {
             return ['What is React?', 'How do you fetch?', 'What is a REST API?', 'What is a full stacker?'][getRandomInt(0,3)]
         }
@@ -101,6 +97,8 @@ class Db {
 
             for (let i = 0; i < count; i++) {
                 let suggestion = new this.suggestionModel({
+                    title:getTitle(),
+                    description:getDescription(),
                     suggestion: getSuggestion(),
                     date: Date.now(),
                     username: getUsername(),
