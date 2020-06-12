@@ -12,7 +12,7 @@ class App extends Component {
 
     // API url from the file '.env' OR the file '.env.development'.
     // The first file is only used in production.
-   // API_URL = 'http://localhost:8080/api';
+    //API_URL = 'http://localhost:8080/api';
     API_URL = process.env.REACT_APP_API_URL;
 
     constructor(props) {
@@ -26,7 +26,6 @@ class App extends Component {
     }
 
     componentDidMount() {
-        //this.GetData();
         this.GetData().then(() => console.log("Suggestions gotten!"));
     }
 
