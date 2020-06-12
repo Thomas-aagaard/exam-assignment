@@ -29,7 +29,8 @@ export default class Suggestion extends Component {
         }
         return (
             <>
-                <h2>{title} Suggestion: {content}</h2>
+            <h2>Title : {title} </h2>
+            <h2>    Suggestion: {content}</h2>
                 <p>Description:  {description}</p>
                 <p>{"Date:" + date }</p><p>{"Username: " + username } </p>
                 <p><strong>{"Signature: " }</strong>{signatures} </p>
