@@ -4,7 +4,7 @@ class Db {
      * @param mongoose the mongoose object used to create schema objects for the database
      */
     constructor(mongoose) {
-        // This is the schema we need to store question in MongoDB
+        // This is the schema we need to store suggestion in MongoDB
         const suggestionSchema = new mongoose.Schema({
             title:String,
             description:String,
@@ -65,7 +65,7 @@ class Db {
 
     /**
      * This method adds a bunch of test data if the database is empty.
-     * @param count The amount of question to add...
+     * @param count The amount of suggestion to add...
      * @returns {Promise} Resolves when everything has been saved.
      */
     async bootstrap(count = 10) {

@@ -23,27 +23,15 @@ export default class addSignature extends Component {
         });
     }
     onSubmit(event) {
-
-        //const info = this.state.input;;
-       // if ( info  === "svend"){
-
-            this.props.AddSignature(this.props.id, this.state.input);
-
-    //  }
-      //  else {
-        //    console.log("Did not work");
-     //   }
+        this.props.AddSignature(this.props.id, this.state.input);
     }
 
     render() {
         return(
             <>
-                <label htmlFor="add-Signature">
-                    Create you signature to the suggestion
-                </label>
+                <label htmlFor="add-Signature">Create you signature to the suggestion</label>
                 <input id="add-Signature" name="input" onChange={event => this.onChange(event)} type="text"/>
                 <button onClick={_ => this.onSubmit()}>Add signature</button>
-
 
             </>
         );

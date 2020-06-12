@@ -13,7 +13,6 @@ class App extends Component {
     // API url from the file '.env' OR the file '.env.development'.
     // The first file is only used in production.
    // API_URL = 'http://localhost:8080/api';
-
     API_URL = process.env.REACT_APP_API_URL;
 
     constructor(props) {
@@ -23,8 +22,7 @@ class App extends Component {
         this.Auth = new AuthService(`${this.API_URL}/users/authenticate`);
         this.state = {
             suggestions: []
-
-    };
+         };
     }
 
     componentDidMount() {
@@ -102,7 +100,6 @@ class App extends Component {
         await this.GetData();
     }
 
-
     GetSuggestion(_id) {
         return this.state.suggestions.find(k => k._id === _id);
     }
@@ -116,7 +113,6 @@ class App extends Component {
         }
     }
 
-
 // Render is used for showing all data. In the render you are defining what the render should return, (what to show).
     render() {
         return (
@@ -128,15 +124,12 @@ class App extends Component {
                     <Login path="/login" login={(username, password) => this.login(username, password)}></Login>
                     <AddSuggestion path="/suggestion" CreateSuggestion={(title, description, suggestion, username) => this.CreateSuggestion(title, description, suggestion, username)} ></AddSuggestion>
                 </Router>
-
                 <Link to={"/suggestion"}>AddSuggestion</Link>
                 <div>
                     <Link to={"/login"}>Loginpage</Link>
                 </div>
                 </>
-
         );
     }
 }
 export default App;
-

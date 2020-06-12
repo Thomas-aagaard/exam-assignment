@@ -51,16 +51,16 @@ app.use('/api/users', usersRouter);
 
 
 app.get('/api/suggestions', async (req, res) => {
-  const ques = await suggestion_db.getData();
-  await res.json(ques);
-  console.log(ques);  /// Tried to see if I could find why I dont get the data
+  const sugg = await suggestion_db.getData();
+  await res.json(sugg);
+  console.log(sugg);  /// Tried to see if I could find why I dont get the data
 });
 
 app.get('/api/suggestions/:id', async (req, res) => {
   let id = req.params.id;
-  const ques = await suggestion_db.getSuggestion(id);
-   await res.json(ques);
-   console.log(ques);
+  const sugg = await suggestion_db.getSuggestion(id);
+   await res.json(sugg);
+   console.log(sugg);
 });
 
 app.post('/api/suggestion', async (req, res) => {
@@ -83,17 +83,9 @@ app.post('/api/suggestions/:id/signatures', async (req, res) => {
   const id = req.params.id;
     const usersignature = {user:req.body.user, userdate:Date().toString()};
 
-  const updatedQuestion = await suggestion_db.addSignatures(id, usersignature);
-  await res.json(updatedQuestion);
+  const updatedSuggestion = await suggestion_db.addSignatures(id, usersignature);
+  await res.json(updatedSuggestion);
 });
-
-/*app.put('/api/questions/:id/answers/:aid', async (req,res) => {
-    const id = req.params.id;
-    const aid = req.params.aid;
-    const updatedQuestion = await suggestion_db.addVote(id, aid);
-    await res.json(updatedQuestion);
-});
-*/
 
 // "Redirect" all get requests (except for the routes specified above) to React's entry point (index.html) to be handled by Reach router
 // It's important to specify this route as the very last one to prevent overriding all of the other routes

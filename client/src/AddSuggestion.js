@@ -44,11 +44,9 @@ export default class AskQuestion extends Component {
                 <input id="username" placeholder="Add username" name="username" onChange={event => this.handleChange(event)} type="text" />
                 <br/><br/>
                 <button onClick={_ => this.onSubmit()}>Add suggestion</button>
-
                 <br/><br/>
                 <Link to="/">Go Back</Link>
                 <br/><br/>
-
             </>
         );
     }
