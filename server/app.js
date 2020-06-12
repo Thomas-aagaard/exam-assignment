@@ -46,8 +46,7 @@ app.use((err, req, res, next) => {
 
 /**** Routes ****/
 
-const usersRouter = require('./routers/users_router')(secret);
-app.use('/api/users', usersRouter);
+
 
 
 app.get('/api/suggestions', async (req, res) => {
@@ -105,3 +104,6 @@ mongoose.connect(url, {useNewUrlParser: true, useUnifiedTopology: true})
 
     })
     .catch(error => console.error(error));
+
+const usersRouter = require('./routers/users_router')(secret);
+app.use('/api/users', usersRouter);
