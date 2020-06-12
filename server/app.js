@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const cors = require('cors');
 const mongoose = require('mongoose');  // We need the mongoose library
 const path = require('path');
-
+const checkJwt = require('express-jwt');
 
 /**** Configuration ****/
 //const appName = "api"; // Change the name of your server app!
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(bodyParser.json()); // Parse JSON from the request body
 app.use(morgan('combined')); // Log all requests to the console
 app.use(express.static('../client/build')); // Needed for serving production build of React
-const checkJwt = require('express-jwt');
+
 
 
 
