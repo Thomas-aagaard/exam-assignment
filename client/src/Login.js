@@ -29,11 +29,6 @@ handlelogin() {
         this.state.username,
         this.state.password
     );
-    //let usertoken = localStorage.getItem("token");
-  /*  useEffect => (() => {
-        localStorage.setItem('Bearer', JSON.stringify(usertoken))
-    });*/
-
 }
     render() {
         return (

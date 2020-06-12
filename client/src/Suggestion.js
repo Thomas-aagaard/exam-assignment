@@ -1,16 +1,9 @@
 import React, {Component} from 'react';
 import {Link} from "@reach/router";
 import AddSignature from "./addSignature";
-///import Answer from "./Answer";
 
 
 export default class Suggestion extends Component {
-
-
-    onSubmit(user) {
-        console.log(this.props.id);
-        //    this.props.AddVoting(this.props.id, aid);
-    }
 
     render() {
         // const id = this.props.id;
@@ -34,7 +27,6 @@ export default class Suggestion extends Component {
             signatures = suggestion.signatures;
             showuser = suggestion.usersignature.map(a => <li key={a}><strong>{ "User: "} </strong>{ a.user} <strong>{" date: "}</strong>{ a.userdate}</li>);
         }
-
         return (
             <>
                 <h2>{title} Suggestion: {content}</h2>
@@ -43,10 +35,6 @@ export default class Suggestion extends Component {
                 <p><strong>{"Signature: " }</strong>{signatures} </p>
                 <p>{showuser}</p>
 
-                <ul>
-
-
-                </ul>
                 <br/>
                 {/* Form to add signature */}
                 <AddSignature id={this.props.id} AddSignature={(id, user) => this.props.AddSignature(id, user)}/>

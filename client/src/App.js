@@ -6,7 +6,6 @@ import AddSuggestion from "./AddSuggestion";
 import {Router} from "@reach/router";
 import AuthService from './AuthService';
 import { Link } from "@reach/router";
-///const jwt = require('jsonwebtoken');
 
 
 class App extends Component {

@@ -45,16 +45,16 @@ app.use((err, req, res, next) => {
 });
 
 /**** Routes ****/
+
+const usersRouter = require('./routers/users_router')(secret);
+app.use('/api/users', usersRouter);
+
+
 app.get('/api/suggestions', async (req, res) => {
   const ques = await suggestion_db.getData();
   await res.json(ques);
   console.log(ques);  /// Tried to see if I could find why I dont get the data
 });
-
-
-const usersRouter = require('./routers/users_router')(secret);
-app.use('/api/users', usersRouter);
-
 
 app.get('/api/suggestions/:id', async (req, res) => {
   let id = req.params.id;

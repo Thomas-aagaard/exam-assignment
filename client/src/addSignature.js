@@ -2,9 +2,7 @@ import React, {Component} from "react";
 
 
 export default class addSignature extends Component {
-
-
-
+    API_URL = process.env.REACT_APP_API_URL;
     constructor(props) {
         super(props);
         this.state = {
@@ -13,10 +11,6 @@ export default class addSignature extends Component {
     }
     async GetData() {
         const resp = await this.Auth.fetch(`${this.API_URL}/suggestions`);
-        // let url = `${this.API_URL}/suggestions`; // URL of the API.
-
-        // let result = await fetch(url); // Get the data
-        //  let json = await result.json(); // Turn it into json
         let json = await resp.json(); // Turn it into json
         return this.setState({ // Set it in the state
             suggestions: json
